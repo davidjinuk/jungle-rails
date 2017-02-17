@@ -5,7 +5,15 @@
   </header>
 
   <div class="order-summary jumbotron">
-    <h4>Thank you for your order!</h4>
+    <h4>Thank you for your order! <%= @order_user.email %></h4>
+
+    <% @order_lineitems.each do |row| %>
+      <p><%= image_tag row.product.image %></p>
+      <p><%= row.product.name %></p>
+      <p><%= row.product.description %></p>
+      <p><%= row.quantity %></p>
+      <p>$<%= row.product.price_cents / 100 %></p>
+    <% end %>
   </div>
 
   <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
