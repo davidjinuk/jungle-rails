@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @order_lineitems = @order.line_items
-    @order_user = User.find(params)
+    @order_user = @order.user
   end
 
   def create
