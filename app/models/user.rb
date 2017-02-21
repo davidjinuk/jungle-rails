@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :password, length: {minimum: 5}
 
   def self.authenticate_with_credentials(email, password)
-    newEmail = email.strip.downcase
+    newEmail = email.split.join("").downcase
 
     @user = User.find_by(email: newEmail)
     if @user
