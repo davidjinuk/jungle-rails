@@ -1,21 +1,59 @@
 <section class="orders-show">
-
   <header class="page-header">
     <h1>Order #<%= @order.id %></h1>
   </header>
-
-  <div class="order-summary jumbotron">
-    <h4>Thank you for your order! <%= @order.email %></h4>
-
-    <% @order_lineitems.each do |row| %>
-      <p><%= image_tag row.product.image %></p>
-      <p><%= row.product.name %></p>
-      <p><%= row.product.description %></p>
-      <p><%= row.quantity %></p>
-      <p>$<%= row.product.price_cents / 100 %></p>
-    <% end %>
-  </div>
-
-  <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
-
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th colspan="2">Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <div class="order-summary jumbotron">
+          <% if current_user %>
+            <h4>Thank you for your order! <%= current_user.email %></h4>
+          <% else %>
+            <h4>Thank you for your order!</h4>
+          <% end %>
+          <% @order_total = 0 %>
+          <% @order_lineitems.each do |row| %>
+            <% item_total = (row.product.price_cents / 100) * row.quantity %>
+            <% @order_total += item_total %>
+            <tr>
+              <td>
+                <%= image_tag row.product.image.tiny %>
+              </td>
+              <td>
+                <%= row.product.name %>
+              </td>
+              <td>
+                <%= row.product.description %>
+              </td>
+              <td>
+                <%= row.quantity %>
+              </td>
+              <td>
+                $<%= row.product.price_cents / 100 %>
+              </td>
+            </tr>
+          <% end %>
+        </div>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="4">
+            TOTAL:
+          </th>
+          <th>
+            $<%= @order_total %>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+        <div>
+          <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>
+        </div>
 </section>
