@@ -22,6 +22,8 @@
           <dd><%= @product.quantity %></dd>
           <dt>Price</dt>
           <dd><%= @product.price %></dd>
+          <dt>Average Review</dt>
+          <dd><%= @product_rating %></dd>
           <dt>Review</dt>
           <% @product.reviews.reverse_each do |review| %>
             <dd>
